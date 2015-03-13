@@ -54,7 +54,7 @@ public class Bocateria
             ultimoCola.setSiguienteEnLaCola(new Cliente(numeroDeBocadillos));
         }
     }
-    
+
     /**
      * Metodo que imprime por pantalla los datos de los clientes en cola
      */
@@ -62,27 +62,66 @@ public class Bocateria
     {
         // Recorremos la cola de clientes e imprimemos su información por pantalla
         Cliente cliente = primeraPersonaEnCola;
+        String info = "";
         while(cliente != null)
         {
-            System.out.println(cliente.toString());
+            info = cliente.toString() +"(" + (PRECIO_BOCADILLO*cliente.getNumeroDeBocadillos()) + " euros)";
+            System.out.println(info);
             cliente = cliente.getSiguienteEnLaCola();
         }
     }
-    
+
     /**
      * Despacha al cliente actual en la cola y coloca al siguiente cliente como primero de la cola
      */
     public void despacharClienteActual()
     {
-        // Sumamos la facturacion del cliente que esta el primero en la cola
-        facturacionActual += primeraPersonaEnCola.getNumeroDeBocadillos()*PRECIO_BOCADILLO;
-        // Creamos un integer basado en su posicion en la cola para pasarlo como clave
-        // en el HashMap de clientes despachados
-        Integer clave = new Integer(primeraPersonaEnCola.getNumeroCliente());
-        // Añadimos el cliente a clientes despachados
-        clientesDespachados.put(clave, primeraPersonaEnCola);
-        // cambiamos el primer cliente en la cola por el siguiente cliente
-        primeraPersonaEnCola = primeraPersonaEnCola.getSiguienteEnLaCola();
+        if(primeraPersonaEnCola != null)
+        {
+            // Sumamos la facturacion del cliente que esta el primero en la cola
+            facturacionActual += primeraPersonaEnCola.getNumeroDeBocadillos()*PRECIO_BOCADILLO;
+            // Creamos un integer basado en su posicion en la cola para pasarlo como clave
+            // en el HashMap de clientes despachados
+            Integer clave = new Integer(primeraPersonaEnCola.getNumeroCliente());
+            // Añadimos el cliente a clientes despachados
+            clientesDespachados.put(clave, primeraPersonaEnCola);
+            // cambiamos el primer cliente en la cola por el siguiente cliente
+            primeraPersonaEnCola = primeraPersonaEnCola.getSiguienteEnLaCola();
+        }
+    }
+
+    /**
+     * Visualiza por pantalla los datos actuales de la bocateria: facturacion actual, clientes en cola y clientes despachados
+     */
+    public void visualizaDatosBocateria()
+    {
+        // Imprimimos por pantalla los datos
+        System.out.println("Facturación actual: " + facturacionActual + " euros");
+        System.out.println("Estado de la cola:");
+        visualizaDatosClientesEnCola();
+        System.out.println("Clientes despachados:");
+        visualizaDatosClientesDespachados();
+    }
+
+    /**
+     * Visualiza por pantalla los datos de los clientes ya despachados
+     */
+    public void visualizaDatosClientesDespachados()
+    {
+        // Buscamos cuantos clientes existen en el hasmap de clientes despachados,
+        // seran tantos como el numero de cliente que estamos despachando ahora
+        int keyCliente = Cliente.numeroClienteActual;
+        String info = "";
+        for(int i = 1; i < keyCliente; i++)
+        {
+            // Tomamos la informacion de ese cliente y la imprimimos por pantalla
+            Cliente cliente = clientesDespachados.get(i);
+            if (cliente != null)
+            {
+                info = cliente.toString();
+                System.out.println(info);
+            }
+        }
     }
 
 }

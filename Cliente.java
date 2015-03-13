@@ -14,7 +14,7 @@ public class Cliente
     // Numero de bocadillos que desea el cliente
     private int numeroDeBocadillos;
     // Numero de cliente actual
-    private static int numeroClienteActual = 1;
+    public static int numeroClienteActual = 1;
 
     /**
      * Constructor de clientes
@@ -64,8 +64,7 @@ public class Cliente
      */
     public String toString()
     {
-        String info = "Cliente: " + numeroCliente + " " + numeroDeBocadillos + " bocadillo/s ("
-                        + (Bocateria.PRECIO_BOCADILLO*numeroDeBocadillos) + " euros)";
+        String info = "Cliente: " + numeroCliente + " " + numeroDeBocadillos + " bocadillo/s ";
         return info;
     }
     
