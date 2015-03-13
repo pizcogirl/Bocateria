@@ -169,6 +169,67 @@ public class Bocateria
     }
 
     /**
+     * Ordena la cola segun el numero de bocadillos que quiere cada cliente
+     * Si dos estan empatados no es relevante en que orden estan entre ellos
+     */
+    public void ordenarColaPorNumeroDeBocadillos()
+    {
+        //Lo primero, cuento cuantos clientes hay en la cola, esa sera
+        //el numero de veces que tenga que recorrerla para ordenarla
+        int numClientes = 0;
+        Cliente cliente = primeraPersonaEnCola;
+        while(cliente != null)
+        {
+            numClientes++;
+            cliente = cliente.getSiguienteEnLaCola();
+        }
+        // Ahora recorremos la cola de clientes tantas veces como clientes tengamos
+        // si el numero de bocadillos del siguiente es mayor, intercambiamos las posiciones entre ambos
+        // Por lo que volvemos a darle a cliente el valor del primer cliente en la cola
+        cliente = primeraPersonaEnCola;
+        Cliente siguienteCliente = null;
+        // Para poder cambiar las veces tambien debo guardar el cliente anterior
+        Cliente anteriorCliente = null;
+        for(int i = 0; i < numClientes; i++)
+        {
+            // Por cada cliente en la cola recorrro toda la cola intercambiando posiciones si es necesario
+            anteriorCliente = null;
+            cliente = primeraPersonaEnCola;
+            while(cliente != null)
+            {
+                siguienteCliente = cliente.getSiguienteEnLaCola();
+                // Si el siguiente cliente quiere mas bocadillos, intercambiamos posiciones
+                if(siguienteCliente != null && (siguienteCliente.getNumeroDeBocadillos() > cliente.getNumeroDeBocadillos()))
+                {
+                    // Cambiamos el cliente tras elactual por el que seguia
+                    // al siguiente, y del cliente que seguia al siguiente por el actual
+                    cliente.setSiguienteEnLaCola(siguienteCliente.getSiguienteEnLaCola());
+                    siguienteCliente.setSiguienteEnLaCola(cliente);
+                    // Si el anterior cliente no es null, cambiamos a quien le da la vez por siguienteCliente
+                    if(anteriorCliente != null)
+                    {
+                        anteriorCliente.setSiguienteEnLaCola(siguienteCliente);
+                    }
+                    else
+                    {
+                        primeraPersonaEnCola = siguienteCliente;
+                    }
+                    // Guardamos como anterior cliente el que acabamos de cambiar de posicion, y dejamos cliente como esta
+                    // para que lo compare con el siguiente
+                    anteriorCliente = siguienteCliente;
+                }
+                else
+                {
+                    // Cambiamos clienteAnterior por el que acabamos de examinar, y tomamos el siguiente en la cola
+                    // En caso de no haber hecho cambios en la lista
+                    anteriorCliente = cliente;
+                    cliente = siguienteCliente;
+                }
+            }
+        }
+    }
+
+    /**
      * Visualiza por pantalla los datos de los clientes ya despachados
      */
     public void visualizaDatosClientesDespachados()
