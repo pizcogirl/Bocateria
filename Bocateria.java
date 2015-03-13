@@ -102,6 +102,31 @@ public class Bocateria
         System.out.println("Clientes despachados:");
         visualizaDatosClientesDespachados();
     }
+    
+    /**
+     * Metodo que devuelve la posicion del cliente en la cola que quiere mas bocadillos.
+     * @return La posicion del cliente en cola que quiere mas bocadillos, si no hay nadie
+     * en la cola devuelve -1, si estan empatados más de uno, devuelve la del primero
+     */
+    public int getPosicionPrimerClienteConMasBocadillos()
+    {
+        // Recorremos la cola y vamos guardando la posicion del cliente
+        // que quiera mas bocadillos, para comprobar guardamos tambien el numero de bocadillos
+        // que quiere, inicializamos en -1 ambas variables
+        int posicionMasBocadillos = -1;
+        int numBocadillos = -1;
+        Cliente cliente = primeraPersonaEnCola;
+        while(cliente != null)
+        {
+            if(cliente.getNumeroDeBocadillos() > numBocadillos)
+            {
+                numBocadillos = cliente.getNumeroDeBocadillos();
+                posicionMasBocadillos = cliente.getNumeroCliente();
+            }
+            cliente = cliente.getSiguienteEnLaCola();
+        }
+        return posicionMasBocadillos;
+    }
 
     /**
      * Visualiza por pantalla los datos de los clientes ya despachados
