@@ -102,7 +102,7 @@ public class Bocateria
         System.out.println("Clientes despachados:");
         visualizaDatosClientesDespachados();
     }
-    
+
     /**
      * Metodo que devuelve la posicion del cliente en la cola que quiere mas bocadillos.
      * @return La posicion del cliente en cola que quiere mas bocadillos, si no hay nadie
@@ -129,6 +129,46 @@ public class Bocateria
     }
 
     /**
+     * Metodo que representa que un cliente ha abandonado la cola sin llegar a realizar su pedido
+     * @param id El numero de cliente que ha abandonado la cola
+     */
+    public void clienteAbandonaCola(int id)
+    {
+        // Recorremos la lista de clientes hasta llegar al anterior al que ha abandonado la cola
+        // en este tenemos que cambiar el siguiente en cola por el que esperaba tras el
+        // que ha abandonado la cola
+        Cliente cliente = primeraPersonaEnCola;
+        //El caso especial de que el que abandone la cola sea el primero de la cola lo tratamos mirando sus datos
+        // Sino recorremos la cola
+        if(cliente.getNumeroCliente() == id)
+        {
+            primeraPersonaEnCola = cliente.getSiguienteEnLaCola();
+        }
+        else
+        {
+            // Creamos un boolean para que una vez encontrado el cliente que abandono
+            // la cola, ya no busque mas
+            boolean encontrado = false;
+            while(cliente != null && (!encontrado))
+            {
+                // Tomamos siempre el siguiente cliente al que nos encontramos, para ver si es el que
+                // deja la cola
+                Cliente temporal = cliente.getSiguienteEnLaCola();
+                // Comprobamos que exista alguien en la cola, y que sea el que buscamos
+                if(temporal != null && temporal.getNumeroCliente() == id)
+                {
+                    // Si es asi, en el cliente anterior cambiamos el siguiente en cola por el que espera 
+                    // tras el cliente que se va a marchar de la cola
+                    cliente.setSiguienteEnLaCola(temporal.getSiguienteEnLaCola());
+                    // Cambiamos el valor del boolean a encontrado para que no itere mas
+                    encontrado = true;
+                }
+                cliente = cliente.getSiguienteEnLaCola();
+            }
+        }
+    }
+
+    /**
      * Visualiza por pantalla los datos de los clientes ya despachados
      */
     public void visualizaDatosClientesDespachados()
@@ -139,12 +179,16 @@ public class Bocateria
         String info = "";
         for(int i = 1; i < keyCliente; i++)
         {
-            // Tomamos la informacion de ese cliente y la imprimimos por pantalla
-            Cliente cliente = clientesDespachados.get(i);
-            if (cliente != null)
+            // Comprobamos si la key existe en el hashMap
+            if(clientesDespachados.containsKey(i))
             {
-                info = cliente.toString();
-                System.out.println(info);
+                // Tomamos la informacion de ese cliente y la imprimimos por pantalla
+                Cliente cliente = clientesDespachados.get(i);
+                if (cliente != null)
+                {
+                    info = cliente.toString();
+                    System.out.println(info);
+                }
             }
         }
     }
