@@ -50,7 +50,7 @@ public class Bocateria
             {
                 ultimoCola = ultimoCola.getSiguienteEnLaCola();
             }
-            // CUando llegamos al que no tiene nadie detras, seteamos su siguiente en la cola con el nuevo cliente
+            // Cuando llegamos al que no tiene nadie detras, seteamos su siguiente en la cola con el nuevo cliente
             ultimoCola.setSiguienteEnLaCola(new Cliente(numeroDeBocadillos));
         }
     }
@@ -67,6 +67,22 @@ public class Bocateria
             System.out.println(cliente.toString());
             cliente = cliente.getSiguienteEnLaCola();
         }
+    }
+    
+    /**
+     * Despacha al cliente actual en la cola y coloca al siguiente cliente como primero de la cola
+     */
+    public void despacharClienteActual()
+    {
+        // Sumamos la facturacion del cliente que esta el primero en la cola
+        facturacionActual += primeraPersonaEnCola.getNumeroDeBocadillos()*PRECIO_BOCADILLO;
+        // Creamos un integer basado en su posicion en la cola para pasarlo como clave
+        // en el HashMap de clientes despachados
+        Integer clave = new Integer(primeraPersonaEnCola.getNumeroCliente());
+        // Añadimos el cliente a clientes despachados
+        clientesDespachados.put(clave, primeraPersonaEnCola);
+        // cambiamos el primer cliente en la cola por el siguiente cliente
+        primeraPersonaEnCola = primeraPersonaEnCola.getSiguienteEnLaCola();
     }
 
 }

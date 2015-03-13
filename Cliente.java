@@ -53,7 +53,7 @@ public class Cliente
      * Metodo que devuelve el numero del cliente
      * @return El numero del cliente
      */
-    public int numeroCliente()
+    public int getNumeroCliente()
     {
         return numeroCliente;
     }
