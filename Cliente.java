@@ -14,7 +14,7 @@ public class Cliente
     // Numero de bocadillos que desea el cliente
     private int numeroDeBocadillos;
     // Numero de cliente actual
-    private static numeroClienteActual = 1;
+    private static int numeroClienteActual = 1;
 
     /**
      * Constructor de clientes
@@ -30,5 +30,50 @@ public class Cliente
         // Al llegar a la cola no habria nadie detras, asi que inicializamos a null
         siguienteEnLaCola = null;
     }
-
+    
+    /**
+     * Metodo que devuelve el siguiente cliente en cola
+     * @return El siguiente cliente en cola
+     */
+    public Cliente getSiguienteEnLaCola()
+    {
+        return siguienteEnLaCola;
+    }
+    
+    /**
+     * Metodo que devuelve el numero de bocadillos que quiere el cliente
+     * @return Numero de bocadillos que quiere el cliente
+     */
+    public int getNumeroDeBocadillos()
+    {
+        return numeroDeBocadillos;
+    }
+    
+    /**
+     * Metodo que devuelve el numero del cliente
+     * @return El numero del cliente
+     */
+    public int numeroCliente()
+    {
+        return numeroCliente;
+    }
+    
+    /**
+     * Metodo que devuelve la informacion del cliente
+     * @return La informacion del cliente
+     */
+    public String toString()
+    {
+        String info = "Cliente: " + numeroCliente + " " + numeroDeBocadillos + " bocadillo/s ";
+        return info;
+    }
+    
+    /**
+     * Coloca el siguiente cliente en la cola
+     * @param cliente El siguiente cliente en la cola
+     */
+    public void setSiguienteEnLaCola(Cliente cliente)
+    {
+        siguienteEnLaCola = cliente;
+    }
 }
