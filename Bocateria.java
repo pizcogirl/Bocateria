@@ -15,7 +15,7 @@ public class Bocateria
     // Mapa con los clientes despachados hasta el momento
     private HashMap<Integer, Cliente> clientesDespachados;
     // Precio del bocadillo
-    private final static int PRECIO_BOCADILLO = 5;
+    public final static int PRECIO_BOCADILLO = 5;
 
     /**
      * Constructor for objects of class Bocateria
@@ -31,6 +31,7 @@ public class Bocateria
 
     /**
      * Metodo que coloca un nuevo cliente en la cola
+     * @param El numero de bocadillos que desea el cliente
      */
     public void llegaNuevoClienteALaCola(int numeroDeBocadillos)
     {
@@ -51,6 +52,20 @@ public class Bocateria
             }
             // CUando llegamos al que no tiene nadie detras, seteamos su siguiente en la cola con el nuevo cliente
             ultimoCola.setSiguienteEnLaCola(new Cliente(numeroDeBocadillos));
+        }
+    }
+    
+    /**
+     * Metodo que imprime por pantalla los datos de los clientes en cola
+     */
+    public void visualizaDatosClientesEnCola()
+    {
+        // Recorremos la cola de clientes e imprimemos su información por pantalla
+        Cliente cliente = primeraPersonaEnCola;
+        while(cliente != null)
+        {
+            System.out.println(cliente.toString());
+            cliente = cliente.getSiguienteEnLaCola();
         }
     }
 

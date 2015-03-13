@@ -64,7 +64,8 @@ public class Cliente
      */
     public String toString()
     {
-        String info = "Cliente: " + numeroCliente + " " + numeroDeBocadillos + " bocadillo/s ";
+        String info = "Cliente: " + numeroCliente + " " + numeroDeBocadillos + " bocadillo/s ("
+                        + (Bocateria.PRECIO_BOCADILLO*numeroDeBocadillos) + " euros)";
         return info;
     }
     
